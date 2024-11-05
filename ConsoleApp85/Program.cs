@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp85
+namespace ConsoleApp85
 {
     internal class Program
     {
@@ -6,10 +6,32 @@
         {
             try
             {
+                double[,] elements = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+                MyMatrix matrix = new MyMatrix(elements);
+                MyMatrix matrix_1;
+                MyMatrix matrix_2;
                 Console.WriteLine("Enter the data to create the matrix 1:");
-                MyMatrix matrix_1 = Input();
+                Console.WriteLine("Enter 1 if you want to create a copy of classic MyMatrix. 0 - continue.");
+                int choice = int.Parse(Console.ReadLine() ?? "0");
+                if (choice == 1) 
+                {
+                    matrix_1 = Input(matrix);
+                }
+                else 
+                {
+                    matrix_1 = Input();
+                }
                 Console.WriteLine("Enter the data to create the matrix 2:");
-                MyMatrix matrix_2 = Input();
+                Console.WriteLine("Enter 1 if you want to create a copy of another MyMatrix. 0 - continue.");
+                choice = int.Parse(Console.ReadLine() ?? "0");
+                if (choice == 1)
+                {
+                    matrix_2 = Input(matrix_1);
+                }
+                else
+                {
+                    matrix_2 = Input();
+                }
                 Operations(matrix_1, matrix_2);
             } 
             catch (Exception ex)
@@ -32,35 +54,22 @@
             Console.WriteLine("Adding matrices: ");
             (matrix_11 + matrix_12).PrintMatrix();
         }
+        static MyMatrix Input(MyMatrix matrix) 
+        {
+            MyMatrix matrix2;
+            matrix2 = new MyMatrix(matrix);
+            return matrix2;
+        }
         static MyMatrix Input()
         {
-            Console.WriteLine("Enter 1 if you want to create a copy of another MyMatrix.");
             Console.WriteLine("Enter 2 if you want to type a two-dimensional array (double[,]).");
             Console.WriteLine("Enter 3 if you want to enter a jagged array (double[][]).");
             Console.WriteLine("Enter 4 if you want to enter an array of strings.");
             Console.WriteLine("Enter 5 if you want to enter the matrix as one row.");
             MyMatrix originalMatrix;
             int choice = int.Parse(Console.ReadLine() ?? "0");
-
             switch (choice)
             {
-                case 1:
-                    Console.WriteLine("Enter the dimension of the matrix you want to create for copying: ");
-                    int rows1 = int.Parse(Console.ReadLine());
-                    int cols1 = int.Parse(Console.ReadLine());
-
-                    double[,] elements1 = new double[rows1, cols1];
-                    Console.WriteLine("Enter the elements of the matrix: ");
-                    for (int i = 0; i < rows1; i++)
-                    {
-                        for (int j = 0; j < cols1; j++)
-                        {
-                            elements1[i, j] = double.Parse(Console.ReadLine());
-                        }
-                    }
-                    originalMatrix = new MyMatrix(elements1);
-                    return originalMatrix;
-
                 case 2:
                     Console.WriteLine("Enter the number of rows and columns: ");
                     int rows2 = int.Parse(Console.ReadLine());
